@@ -1,5 +1,5 @@
-import TopBar from "./topBar/topBar";
-import Home from "./pages/home/Home";
+import TopBar from "./components/topBar/TopBar";
+import Home from "./pages/home/home/Home";
 
 function App() {
   return (
