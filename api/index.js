@@ -11,7 +11,7 @@ const app = express();
 //app.use(express.json());
 
 
-console.log("hello world");
+console.log("hello journal");
 app.listen("5000", () => {
     console.log("Backend is running!");
     });
