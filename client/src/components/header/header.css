@@ -1,32 +1,30 @@
-.header{
+.header {
     margin-top: 60px;
-
 }
 
-.headerTitles{
+.headerTitles {
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-    color: rgb(56, 30, 30);
-    font-family: 'Lora',serif;
+    align-items: center;
+    font-family: "Lora", serif;
+    color: #444;
 }
 
-.headerTitleSm{
+.headerTitleSm {
     position: absolute;
     top: 18%;
     font-size: 20px;
 }
 
-.headerTitleLg{
+.headerTitleLg {
     position: absolute;
     top: 20%;
     font-size: 100px;
 }
 
-.headerImg{
+.headerImg {
     width: 100%;
     height: 450px;
-    object-fit: cover;
     margin-top: 80px;
+    object-fit: cover;
 }
