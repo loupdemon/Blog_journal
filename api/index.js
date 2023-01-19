@@ -1,39 +1,61 @@
 const express = require('express');
-// const router = express.Router();
-// const Post = require('../models/Post');
-// const User = require('../models/User');
-// const Category = require('../models/Category');
-// const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
 const mongoose = require("mongoose");
-
 const app = express();
-//DOTENV environnement de travai
+
+const authRoute = require('./routes/auth');
+const userRoute = require('./routes/users');
+const postRoute = require('./routes/posts');
+const categoryRoute = require('./routes/categories');
+
 const dotenv = require("dotenv");
 
+const multer = require("multer");
+
+//MONGOOSE CONFIG
+mongoose.set("strictQuery", false);
+//DOTENV CONFIG
 dotenv.config();
 
-//usage de mongoose pour gestion de sql
-mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    //useFindAndModify: false,
-}).then(() => {
-    console.log("DB connection successful!");
-}).catch((err) => {
-    console.log(err);
+//EXPRESS JSON
+app.use(express.json());
+
+//MONGOOSE CONNECT
+mongoose
+    .connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        // useCreateIndex: true,
+        //useFindAndModify: false,
+    }).then(() => {
+        console.log("DB connection successful!");
+    }).catch((err) => {
+        console.log(err);
+});
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "images");
+    },
+    filename: (req, file, cb) => {
+        cb(null, req.body.name);
+        // cb(null, "hello.jpeg");
+    },
+});
+
+const upload = multer({ storage: storage });
+app.post("/api/upload", upload.single("file"), (req, res) => {
+    res.status(200).json("File has been uploaded");
 });
 
 
-// app.use("/lama",(req,res)=>{
+//ROUTES MIDDLEWARE
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+app.use("/api/posts", postRoute);
+app.use("/api/categories", categoryRoute);
 
-//     console.log("hey  this main url");
-//     //res.send("Hello World");
-// });
-
-
-console.log("hello journal");
-app.listen("5000", () => {
+// console.log("hello journal");
+//LISTENING
+app.listen("6000", () => {
     console.log("Backend is running!");
 });
