@@ -13,17 +13,17 @@ import { Context } from "./context/Context";
 //import Switch from "react-router"
 function App() {
   // const currentUser = true;
-  const { currentUser } = useContext(Context);
+  const { user} = useContext(Context);
 
   return (
     <Router>
       <TopBar />
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route path="/register" element={currentUser ? <Home /> : <Register />} />
-        <Route path="/login" element={currentUser ? <Home /> : <Login />} />
-        <Route path="/write" element={currentUser ? <Write /> : <Login />} />
-        <Route path="/settings" element={currentUser ? <Settings /> : <Login />} />
+        <Route path="/register" element={user ? <Home /> : <Register />} />
+        <Route path="/login" element={user ? <Home /> : <Login />} />
+        <Route path="/write" element={user ? <Write /> : <Login />} />
+        <Route path="/settings" element={user ? <Settings /> : <Login />} />
         <Route path="/post/:id" element={<Single />} />
       </Routes>
     </Router>
