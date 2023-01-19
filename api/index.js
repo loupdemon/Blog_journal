@@ -2,14 +2,20 @@ const express = require('express');
 const mongoose = require("mongoose");
 const app = express();
 const authRoute = require('./routes/auth');
+const userRoute = require('./routes/users');
+const postRoute = require('./routes/posts');
+const categoryRoute = require('./routes/categories');
 const dotenv = require("dotenv");
-// mongoose.connect(process.env.MONGO_URL);
+
+//MONGOOSE CONFIG
 mongoose.set("strictQuery", false);
-//DOTENV environnement de travai
+//DOTENV CONFIG
 dotenv.config();
 
+//EXPRESS JSON
 app.use(express.json());
-//usage de mongoose pour gestion de sql
+
+//MONGOOSE CONNECT
 mongoose
     .connect(process.env.MONGO_URL, {
         useNewUrlParser: true,
@@ -22,10 +28,14 @@ mongoose
         console.log(err);
 });
 
+//ROUTES MIDDLEWARE
 app.use("/api/auth", authRoute);
-
+app.use("/api/users", userRoute);
+app.use("/api/posts", postRoute);
+app.use("/api/categories", categoryRoute);
 
 // console.log("hello journal");
+//LISTENING
 app.listen("6000", () => {
     console.log("Backend is running!");
 });
