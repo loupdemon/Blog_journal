@@ -1,11 +1,15 @@
 const express = require('express');
 const mongoose = require("mongoose");
 const app = express();
+
 const authRoute = require('./routes/auth');
 const userRoute = require('./routes/users');
 const postRoute = require('./routes/posts');
 const categoryRoute = require('./routes/categories');
+
 const dotenv = require("dotenv");
+
+const multer = require("multer");
 
 //MONGOOSE CONFIG
 mongoose.set("strictQuery", false);
@@ -27,6 +31,22 @@ mongoose
     }).catch((err) => {
         console.log(err);
 });
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "images");
+    },
+    filename: (req, file, cb) => {
+        cb(null, req.body.name);
+        // cb(null, "hello.jpeg");
+    },
+});
+
+const upload = multer({ storage: storage });
+app.post("/api/upload", upload.single("file"), (req, res) => {
+    res.status(200).json("File has been uploaded");
+});
+
 
 //ROUTES MIDDLEWARE
 app.use("/api/auth", authRoute);
