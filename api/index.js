@@ -11,6 +11,8 @@ const dotenv = require("dotenv");
 
 const multer = require("multer");
 
+const path = require("path");
+
 //MONGOOSE CONFIG
 mongoose.set("strictQuery", false);
 //DOTENV CONFIG
@@ -19,6 +21,8 @@ dotenv.config();
 //EXPRESS JSON
 app.use(express.json());
 
+//READ IMAGES
+app.use("/images", express.static(path.join(__dirname + "/images")));
 //MONGOOSE CONNECT
 mongoose
     .connect(process.env.MONGO_URL, {
@@ -32,16 +36,18 @@ mongoose
         console.log(err);
 });
 
+//function to upload image and wich caled bu post request
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "images");
     },
     filename: (req, file, cb) => {
         cb(null, req.body.name);
-        // cb(null, "hello.jpeg");
+        // cb(null, "affiche.jpeg");
     },
 });
 
+//in order to upload image odn't use toutes middeleware
 const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), (req, res) => {
     res.status(200).json("File has been uploaded");

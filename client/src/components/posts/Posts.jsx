@@ -8,6 +8,7 @@ export default function Posts({posts}) {
       <Post post={p} />
     ))
     }
+    {/* <Post  photo={p.photo} desc={p.desc} title={p.title} createdAt={p.createdAt} categories={p.categories} /> */}
 
     
       {/* <Post img="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
